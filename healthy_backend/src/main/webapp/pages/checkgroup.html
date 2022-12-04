@@ -176,15 +176,15 @@
                             <template>
                                 <el-tabs v-model="activeName" type="card">
                                     <el-tab-pane label="基本信息" name="first">
-                                        <el-form label-position="right" label-width="100px">
+                                        <el-form  ref="dataUpdateForm" :model="formData" :rules="rules"  label-position="right" label-width="100px">
                                             <el-row>
                                                 <el-col :span="12">
-                                                    <el-form-item label="编码">
+                                                    <el-form-item label="编码" prop="code" >
                                                         <el-input v-model="formData.code"/>
                                                     </el-form-item>
                                                 </el-col>
                                                 <el-col :span="12">
-                                                    <el-form-item label="名称">
+                                                    <el-form-item label="名称" prop="name" >
                                                         <el-input v-model="formData.name"/>
                                                     </el-form-item>
                                                 </el-col>
@@ -286,6 +286,29 @@
             methods: {
                 //编辑
                 handleEdit() {
+                    //进行表格校验
+                    this.$refs['dataUpdateForm'].validate((valid) => {
+                        if(valid){
+                            //校验成功
+                            //发送请求，添加数据
+                            axios.post("/checkGroupItem/update.do?checkitemIds=" + this.checkitemIds, this.formData).then((res) => {
+                                if(res.data.flag){
+                                    //修改成功
+                                    //隐藏添加窗口
+                                    this.dialogFormVisible4Edit = false;
+                                } else {
+                                    //添加失败
+                                    this.$message.error("系统出错了，请重试!")
+                                }
+                            }).finally(() => {
+                                //分页查询
+                                this.findPage();
+                            })
+                        } else {
+                            //校验失败
+                            this.$message.error("数据校验失败")
+                        }
+                    })
                 },
                 //添加
                 handleAdd () {
@@ -305,7 +328,7 @@
                                 }
                             }).finally(() => {
                                 //分页查询
-                                this.queryPage()
+                                this.findPage()
                             })
                         } else {
                             //校验失败
@@ -353,6 +376,45 @@
                 },
                 // 弹出编辑窗口
                 handleUpdate(row) {
+                    var flag = true;
+                    //显示编辑窗口
+                    this.dialogFormVisible4Edit = true;
+                    //默认显示基本信息标签
+                    this.activeName = "first";
+                    //发送请求，回显检查组数据信息
+                    axios.get("/checkGroupItem/findById.do?id="+row.id).then((res) => {
+                        if(res.data.flag){
+                            //查询成功
+                            this.formData = res.data.data;
+                            //发送请求，查询当前检查组所对应的检查项数据
+                            axios.get("/checkGroupItem/findCheckItemIdsByCheckGroupId.do?id="+ row.id).then((res) => {
+                                if(res.data.flag){
+                                    //查询成功
+                                    this.checkitemIds = res.data.data;
+                                } else{
+                                    //查询失败
+                                    flag = false;
+                                }
+                            })
+                        } else{
+                            //查询失败
+                            this.$message.error("系统出错了，请重试！")
+                        }
+                    })
+                    //发送请求，获取检查项
+                    if(flag) {
+                        axios.get("/checkitem/getAll.do").then((res) => {
+                            if (res.data.flag) {
+                                //查询成功
+                                this.tableData = res.data.data;
+                            } else {
+                                //查询失败
+                                this.$message.error(res.data.message)
+                            }
+                        })
+                    } else{
+                        this.$message.error("系统出错了，请重试！")
+                    }
                 },
                 //切换页码
                 handleCurrentChange(currentPage) {

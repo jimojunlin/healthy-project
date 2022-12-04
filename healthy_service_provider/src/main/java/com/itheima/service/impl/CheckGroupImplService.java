@@ -11,6 +11,7 @@ import com.itheima.service.CheckGroupService;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -32,14 +33,7 @@ public class CheckGroupImplService implements CheckGroupService {
         checkGroupDao.add(checkGroup);
 
         //添加检查组与检查项的绑定关系
-        Integer checkGroupId = checkGroup.getId();
-        for (Integer checkitemId : checkitemIds) {
-            Map<String, Integer> map = new HashMap<String, Integer>();
-            map.put("checkGroupId", checkGroupId);
-            map.put("checkitemId", checkitemId);
-
-            checkGroupDao.addCheckGroupIdAndCheckItemId(map);
-        }
+        this.addCheckGroupIdAndCheckItemId(checkitemIds, checkGroup);
     }
 
     /**
@@ -58,5 +52,58 @@ public class CheckGroupImplService implements CheckGroupService {
         Page<CheckGroup> page = checkGroupDao.selectByCondition(queryString);
 
         return new PageResult(page.getTotal(), page.getResult());
+    }
+
+    /**
+     * 根据id获取检查组数据信息
+     *
+     * @param id
+     * @return
+     */
+    public CheckGroup findById(Integer id) {
+        return checkGroupDao.findById(id);
+    }
+
+    /**
+     * 根据id查询检查组对应的检查项
+     *
+     * @param id
+     * @return
+     */
+    public List<Integer> findCheckItemIdsByCheckGroupId(Integer id) {
+        return checkGroupDao.findCheckItemIdsByCheckGroupId(id);
+    }
+
+    /**
+     * 修改检查组
+     *
+     * @param checkitemIds
+     * @param checkGroup
+     */
+    public void update(Integer[] checkitemIds, CheckGroup checkGroup) {
+        //修改检查组信息
+        checkGroupDao.update(checkGroup);
+
+        //删除检查组对应的检查项
+        checkGroupDao.deleteRelation(checkGroup.getId());
+
+        //绑定检查组与检查项的对应关系
+        this.addCheckGroupIdAndCheckItemId(checkitemIds, checkGroup);
+    }
+
+    /**
+     * 绑定检查组与检查项的对应关系
+     * @param checkitemIds
+     * @param checkGroup
+     */
+    public void addCheckGroupIdAndCheckItemId(Integer[] checkitemIds, CheckGroup checkGroup){
+        Integer checkGroupId = checkGroup.getId();
+        for (Integer checkitemId : checkitemIds) {
+            Map<String, Integer> map = new HashMap<String, Integer>();
+            map.put("checkGroupId", checkGroupId);
+            map.put("checkitemId", checkitemId);
+
+            checkGroupDao.addCheckGroupIdAndCheckItemId(map);
+        }
     }
 }

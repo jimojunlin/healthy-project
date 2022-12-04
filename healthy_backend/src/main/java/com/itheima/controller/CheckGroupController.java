@@ -46,4 +46,41 @@ public class CheckGroupController {
         log.info("分页查询条件：{}", queryPageBean);
         return checkGroupService.findPage(queryPageBean);
     }
+
+    //根据id获取检查组数据信息
+    @GetMapping("/findById")
+    public Result findById(Integer id){
+        log.info("根据id获取检查组数据信息：{}", id);
+        try{
+            CheckGroup checkGroup = checkGroupService.findById(id);
+            return new Result(true, MessageConstant.QUERY_CHECKGROUP_SUCCESS, checkGroup);
+        } catch (Exception e){
+            return new Result(false, MessageConstant.QUERY_CHECKGROUP_FAIL);
+        }
+    }
+
+    //根据id查询检查组对应的检查项
+    @GetMapping("/findCheckItemIdsByCheckGroupId")
+    public Result findByIdAndCheckItem(Integer id){
+        log.info("根据id查询检查组对应的检查项：{}", id);
+        try {
+            List<Integer> list = checkGroupService.findCheckItemIdsByCheckGroupId(id);
+            return new Result(true, MessageConstant.QUERY_CHECKITEM_SUCCESS, list);
+        } catch (Exception e){
+            return new Result(false, MessageConstant.QUERY_CHECKITEM_FAIL);
+        }
+    }
+
+    //修改检查组
+    @PostMapping("/update")
+    public Result update(Integer[] checkitemIds, @RequestBody CheckGroup checkGroup){
+        log.info("修改检查组");
+        try{
+            checkGroupService.update(checkitemIds, checkGroup);
+        } catch (Exception e){
+            return new Result(false, MessageConstant.EDIT_CHECKGROUP_FAIL);
+        }
+
+        return new Result(true, MessageConstant.EDIT_CHECKGROUP_SUCCESS);
+    }
 }
