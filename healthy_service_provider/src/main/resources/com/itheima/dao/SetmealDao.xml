@@ -3,20 +3,20 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.itheima.dao.CheckGroupDao">
-    <!--添加检查组-->
-    <insert id="add" parameterType="com.itheima.pojo.CheckGroup">
+<mapper namespace="com.itheima.dao.SetmealDao">
+    <!--添加套餐-->
+    <insert id="add" parameterType="com.itheima.pojo.Setmeal">
         <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER">
             select LAST_INSERT_ID()
         </selectKey>
-        insert into t_checkgroup(code, name, sex, helpCode, attention, remark)
-        values (#{code}, #{name}, #{sex}, #{helpCode}, #{attention}, #{remark})
+        insert into t_setmeal(code, name, sex, helpCode, attention, remark, age, price, img)
+        values (#{code}, #{name}, #{sex}, #{helpCode}, #{attention}, #{remark}, #{age}, #{price}, #{img})
     </insert>
 
-    <!--绑定检查组与检查项的对应关系-->
-    <insert id="addCheckGroupIdAndCheckItemId" parameterType="map">
-        insert into t_checkgroup_checkitem(checkgroup_id, checkitem_id)
-        values (#{checkGroupId}, #{checkitemId})
+    <!--绑定套餐与检查组的对应关系-->
+    <insert id="setSetmealAndCheckGroup" parameterType="map">
+        insert into t_setmeal_checkgroup(setmeal_id, checkgroup_id)
+        values (#{setmealId}, #{checkgroupId})
     </insert>
 
     <!--根据条件查询检查组-->

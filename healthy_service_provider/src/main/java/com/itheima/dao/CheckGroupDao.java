@@ -30,4 +30,7 @@ public interface CheckGroupDao {
 
     //删除检查组对应的检查项
     void deleteRelation(Integer id);
+
+    //获取所有检查组信息
+    List<CheckGroup> findAll();
 }

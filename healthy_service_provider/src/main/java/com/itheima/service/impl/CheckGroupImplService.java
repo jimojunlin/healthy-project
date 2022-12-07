@@ -92,6 +92,15 @@ public class CheckGroupImplService implements CheckGroupService {
     }
 
     /**
+     * 查询检查组所有信息
+     *
+     * @return
+     */
+    public List<CheckGroup> findAll() {
+        return checkGroupDao.findAll();
+    }
+
+    /**
      * 绑定检查组与检查项的对应关系
      * @param checkitemIds
      * @param checkGroup

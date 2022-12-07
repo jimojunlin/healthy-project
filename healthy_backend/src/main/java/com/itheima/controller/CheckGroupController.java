@@ -10,8 +10,6 @@ import com.itheima.service.CheckGroupService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -83,4 +81,16 @@ public class CheckGroupController {
 
         return new Result(true, MessageConstant.EDIT_CHECKGROUP_SUCCESS);
     }
+
+    //获取所有检查组信息
+    @GetMapping("/getAll")
+    public Result getAll(){
+        try{
+            List<CheckGroup> list = checkGroupService.findAll();
+            return new Result(true, MessageConstant.QUERY_CHECKGROUP_SUCCESS, list);
+        } catch (Exception e){
+            return new Result(false, MessageConstant.QUERY_CHECKGROUP_FAIL);
+        }
+    }
+
 }

@@ -1,10 +1,8 @@
 package com.itheima.service;
 
-import com.alibaba.dubbo.config.annotation.Service;
 import com.itheima.entity.PageResult;
 import com.itheima.entity.QueryPageBean;
 import com.itheima.pojo.CheckGroup;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 
@@ -46,4 +44,10 @@ public interface CheckGroupService {
      * @param checkGroup
      */
     void update(Integer[] checkitemIds, CheckGroup checkGroup);
+
+    /**
+     * 查询检查组所有信息
+     * @return
+     */
+    List<CheckGroup> findAll();
 }
