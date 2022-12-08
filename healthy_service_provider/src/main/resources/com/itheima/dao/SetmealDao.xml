@@ -27,19 +27,19 @@
         </if>
     </select>
 
-    <!--根据id获取检查组信息-->
-    <select id="findById" parameterType="integer" resultType="com.itheima.pojo.CheckGroup">
-        select * from t_checkgroup where id = #{id}
+    <!--根据id获取套餐数据-->
+    <select id="getById" parameterType="integer" resultType="com.itheima.pojo.Setmeal">
+        select * from t_setmeal where id = #{id}
     </select>
 
-    <!--根据检查组id获取对应的检查项ids-->
-    <select id="findCheckItemIdsByCheckGroupId" parameterType="integer" resultType="integer">
-        select checkitem_id from t_checkgroup_checkitem where checkgroup_id = #{id}
+    <!--根据套餐id获取套餐所对应的检查组id-->
+    <select id="getSetmealAndCheckGroupById" parameterType="integer" resultType="integer">
+        select checkgroup_id from t_setmeal_checkgroup where setmeal_id = #{id}
     </select>
 
-    <!--修改检查组数据-->
-    <update id="update" parameterType="com.itheima.pojo.CheckGroup">
-        update t_checkgroup
+    <!--修改套餐数据-->
+    <update id="update" parameterType="com.itheima.pojo.Setmeal">
+        update t_setmeal
         <set>
             <if test="name != null">
                 name = #{name},
@@ -59,16 +59,25 @@
             <if test="remark != null">
                 remark = #{remark},
             </if>
+            <if test="age != null">
+                age = #{age},
+            </if>
+            <if test="price != null">
+                price = #{price},
+            </if>
+            <if test="img != null">
+                img = #{img},
+            </if>
         </set>
         where id = #{id}
     </update>
 
-    <!--删除检查组对应的检查项-->
+    <!--删除套餐对应的检查组-->
     <delete id="deleteRelation" parameterType="integer">
-        delete from t_checkgroup_checkitem where checkgroup_id = #{id}
+        delete from t_setmeal_checkgroup where setmeal_id = #{id}
     </delete>
 
-    <!--获取所有检查组信息-->
+    <!--获取所有套餐信息-->
     <select id="findAll" resultType="com.itheima.pojo.CheckGroup">
         select * from t_checkgroup;
     </select>

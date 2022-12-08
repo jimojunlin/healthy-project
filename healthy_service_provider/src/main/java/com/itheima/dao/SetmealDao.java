@@ -24,4 +24,30 @@ public interface SetmealDao {
      * @return
      */
     Page<Setmeal> queryByCondition(String queryString);
+
+    /**
+     * 根据id获取套餐数据
+     * @param id
+     * @return
+     */
+    Setmeal getById(Integer id);
+
+    /**
+     * 根据套餐id获取套餐所对应的检查组id
+     * @param id
+     * @return
+     */
+    Integer[] getSetmealAndCheckGroupById(Integer id);
+
+    /**
+     * 修改套餐信息
+     * @param setmeal
+     */
+    void update(Setmeal setmeal);
+
+    /**
+     * 删除套餐对应的检查组
+     * @param id
+     */
+    void deleteRelation(Integer id);
 }

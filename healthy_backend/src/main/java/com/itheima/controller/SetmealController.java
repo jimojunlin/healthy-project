@@ -77,4 +77,37 @@ public class SetmealController {
             return new PageResult(0L, null);
         }
     }
+
+    //根据id查询数据
+    @GetMapping("/getById")
+    public Result getById(Integer id){
+        try{
+            Setmeal setmeal = setmealService.getById(id);
+            return new Result(true, MessageConstant.QUERY_SETMEAL_SUCCESS, setmeal);
+        } catch (Exception e) {
+            return new Result(false, MessageConstant.QUERY_SETMEAL_FAIL);
+        }
+    }
+
+    //根据套餐id获取套餐所对应的检查组id
+    @GetMapping("/getSetmealAndCheckGroupById")
+    public Result getSetmealAndCheckGroupById(Integer id){
+        try {
+            Integer[] checkGroupIds = setmealService.getSetmealAndCheckGroupById(id);
+            return new Result(true, MessageConstant.QUERY_SETMEAL_SUCCESS, checkGroupIds);
+        } catch (Exception e){
+            return new Result(false, MessageConstant.QUERY_SETMEAL_FAIL);
+        }
+    }
+
+    //修改套餐
+    @PostMapping("/update")
+    public Result update(@RequestBody Setmeal setmeal, Integer[] checkgroupIds) {
+        try {
+            setmealService.update(setmeal, checkgroupIds);
+        } catch (Exception e) {
+            return new Result(false, MessageConstant.UPDATE_SETMEAL_FAIL);
+        }
+        return new Result(true, MessageConstant.UPDATE_SETMEAL_SUCCESS);
+    }
 }

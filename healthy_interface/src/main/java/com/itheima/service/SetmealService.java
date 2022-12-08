@@ -22,4 +22,25 @@ public interface SetmealService {
      * @return
      */
     PageResult findPage(QueryPageBean queryPageBean);
+
+    /**
+     * 根据id获取套餐数据
+     * @param id
+     * @return
+     */
+    Setmeal getById(Integer id);
+
+    /**
+     * 根据套餐id获取套餐所对应的检查组id
+     * @param id
+     * @return
+     */
+    Integer[] getSetmealAndCheckGroupById(Integer id);
+
+    /**
+     * 修改套餐
+     * @param setmeal
+     * @param checkgroupIds
+     */
+    void update(Setmeal setmeal, Integer[] checkgroupIds);
 }

@@ -63,6 +63,43 @@ public class SetmealServiceImpl implements SetmealService {
     }
 
     /**
+     * 根据id获取套餐数据
+     *
+     * @param id
+     * @return
+     */
+    public Setmeal getById(Integer id) {
+        return setmealDao.getById(id);
+    }
+
+    /**
+     * 根据套餐id获取套餐所对应的检查组id
+     *
+     * @param id
+     * @return
+     */
+    public Integer[] getSetmealAndCheckGroupById(Integer id) {
+        return setmealDao.getSetmealAndCheckGroupById(id);
+    }
+
+    /**
+     * 修改套餐
+     *
+     * @param setmeal
+     * @param checkgroupIds
+     */
+    public void update(Setmeal setmeal, Integer[] checkgroupIds) {
+        //修改套餐信息
+        setmealDao.update(setmeal);
+
+        //删除套餐与检查组的对应关系
+        setmealDao.deleteRelation(setmeal.getId());
+
+        //添加套餐与检查组的对应关系
+        this.addSetmealAndCheckgroup(setmeal, checkgroupIds);
+    }
+
+    /**
      * 添加套餐与检查组的关系
      * @param setmeal
      * @param checkgroupIds
