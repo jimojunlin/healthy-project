@@ -43,4 +43,10 @@ public interface SetmealService {
      * @param checkgroupIds
      */
     void update(Setmeal setmeal, Integer[] checkgroupIds);
+
+    /**
+     * 删除套餐
+     * @param id
+     */
+    void delete(Integer id);
 }

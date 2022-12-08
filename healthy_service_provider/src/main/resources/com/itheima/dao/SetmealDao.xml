@@ -82,4 +82,9 @@
         select * from t_checkgroup;
     </select>
 
+    <!--删除套餐-->
+    <delete id="delete" parameterType="integer">
+        delete from t_setmeal where id = #{id}
+    </delete>
+
 </mapper>

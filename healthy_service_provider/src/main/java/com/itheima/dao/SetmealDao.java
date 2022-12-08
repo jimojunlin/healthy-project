@@ -50,4 +50,10 @@ public interface SetmealDao {
      * @param id
      */
     void deleteRelation(Integer id);
+
+    /**
+     * 删除套餐
+     * @param id
+     */
+    void delete(Integer id);
 }

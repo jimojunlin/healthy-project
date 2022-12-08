@@ -38,7 +38,9 @@ public class SetmealServiceImpl implements SetmealService {
         //添加套餐与检查组的关系
         this.addSetmealAndCheckgroup(setmeal, checkgroupIds);
         //将套餐图片url保存到redis
-        jedisPool.getResource().sadd(RedisConstant.SETMEAL_IMG_DB_URL, setmeal.getImg());
+        if(setmeal.getImg() != null && setmeal.getImg().length() > 0) {
+            jedisPool.getResource().sadd(RedisConstant.SETMEAL_IMG_DB_URL, setmeal.getImg());
+        }
     }
 
     /**
@@ -97,6 +99,15 @@ public class SetmealServiceImpl implements SetmealService {
 
         //添加套餐与检查组的对应关系
         this.addSetmealAndCheckgroup(setmeal, checkgroupIds);
+    }
+
+    /**
+     * 删除套餐
+     *
+     * @param id
+     */
+    public void delete(Integer id) {
+        setmealDao.delete(id);
     }
 
     /**
