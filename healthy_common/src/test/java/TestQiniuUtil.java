@@ -9,7 +9,7 @@ public class TestQiniuUtil {
         //文件名
         String fileName = "e1bbda9f-22da-4b11-8f234e2c67d4.jpeg";
 
-        QiniuUtile.upload(localFilePath, fileName);
+        QiniuUtile.uploadByFileName(localFilePath, fileName);
     }
 
     @Test

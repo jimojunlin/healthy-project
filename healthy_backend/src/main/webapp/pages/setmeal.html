@@ -293,6 +293,10 @@
                 },
                 //分页查询
                 findPage() {
+                    axios.post("/setmeal/findPage.do", this.pagination).then((res) => {
+                        this.pagination.total = res.data.total;
+                        this.dataList = res.data.rows;
+                    })
                 },
                 // 重置表单
                 resetForm() {
@@ -320,6 +324,8 @@
                 },
                 //切换页码
                 handleCurrentChange(currentPage) {
+                    this.pagination.currentPage = currentPage;
+                    this.findPage();
                 }
             }
         })
