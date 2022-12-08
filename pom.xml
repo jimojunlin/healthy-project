@@ -12,6 +12,7 @@
         <module>healthy_interface</module>
         <module>healthy_service_provider</module>
         <module>healthy_backend</module>
+        <module>healthy_jobs</module>
     </modules>
     <packaging>pom</packaging>
 

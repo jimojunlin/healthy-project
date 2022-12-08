@@ -48,7 +48,7 @@ public class SetmealController {
         try {
             String fileUrl = QiniuUtile.uploadByBytes(imgFile.getBytes(), fileName);
             //将url保存到redis
-            jedisPool.getResource().sadd(RedisConstant.REDIS_IMG_URL, fileUrl);
+            jedisPool.getResource().sadd(RedisConstant.SETMEAL_IMG_URL, fileUrl);
             return new Result(true, MessageConstant.PIC_UPLOAD_SUCCESS, fileUrl);
         } catch (IOException e) {
             e.printStackTrace();
