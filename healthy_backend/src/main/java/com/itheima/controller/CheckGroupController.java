@@ -93,4 +93,14 @@ public class CheckGroupController {
         }
     }
 
+    //删除检查组
+    @DeleteMapping("/delete")
+    public Result delete(Integer id) {
+        try {
+            checkGroupService.delete(id);
+        } catch (Exception e) {
+            return new Result(false, MessageConstant.DELETE_CHECKGROUP_FAIL);
+        }
+        return new Result(true, MessageConstant.DELETE_CHECKGROUP_SUCCESS);
+    }
 }

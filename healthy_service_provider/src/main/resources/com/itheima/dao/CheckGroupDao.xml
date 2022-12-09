@@ -73,4 +73,9 @@
         select * from t_checkgroup;
     </select>
 
+    <!--删除检查组-->
+    <delete id="delete" parameterType="integer">
+        delete from t_checkgroup where id = #{id}
+    </delete>
+
 </mapper>

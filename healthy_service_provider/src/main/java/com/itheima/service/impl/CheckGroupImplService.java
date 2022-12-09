@@ -14,6 +14,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static org.apache.zookeeper.ZooDefs.OpCode.check;
+
 /**
  * 检查组
  */
@@ -98,6 +100,15 @@ public class CheckGroupImplService implements CheckGroupService {
      */
     public List<CheckGroup> findAll() {
         return checkGroupDao.findAll();
+    }
+
+    /**
+     * 删除检查组
+     *
+     * @param id
+     */
+    public void delete(Integer id) {
+        checkGroupDao.delete(id);
     }
 
     /**
